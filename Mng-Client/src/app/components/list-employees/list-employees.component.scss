@@ -1,0 +1,79 @@
+.table-row:hover {
+  background-color: rgb(144, 143, 143);
+}
+
+.text-primary,
+.text-danger {
+  cursor: pointer;
+}
+
+.table {
+  width: 100%;
+}
+
+.container.mt-3 {
+  margin-top: 4rem !important;
+}
+
+h1 {
+  color: black;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+
+
+#select {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.example-container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.p-dialog {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.ui-dialog {
+  width: 50%;
+  min-width: 300px;
+  max-width: 600px;
+  left: 25%;
+  top: 25%;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-container {
+  max-width: 50%;
+  overflow: auto;
+}
+
+.dialog-content {
+  width: 100%;
+  max-width: 100%;
+}

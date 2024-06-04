@@ -1,0 +1,108 @@
+<div class="form-container">
+    @if(data.employee){<h2 mat-dialog-title>Edit Employee</h2>}
+    @else if(!data.employee){<h2 mat-dialog-title>Add Employee</h2>}
+    <mat-dialog-content class="mat-typography">
+        <button mat-icon-button mat-dialog-close class="close">
+            <mat-icon>close</mat-icon>
+        </button>
+        <div class="add-employee">
+            <form *ngIf="employeeForm" [formGroup]="employeeForm">
+                <div class="form-row">
+                    <!-- First Name -->
+                    <mat-form-field class="form-field">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" placeholder="Enter First Name">
+                        @if(employeeForm.get('firstName')?.hasError('required'))
+                        {<mat-error>First Name is required</mat-error>}
+                        @if(employeeForm.get('firstName')?.hasError('pattern'))
+                        {<mat-error>First Name must contain letters only</mat-error>}
+                        @if(employeeForm.get('firstName')?.hasError('minLength'))
+                        {<mat-error>First Name must be at least 5 characters long</mat-error>}
+                        @if(employeeForm.get('firstName')?.hasError('maxLength'))
+                        {<mat-error>First Name must be at most 10 characters long</mat-error>}
+                    </mat-form-field>
+
+                    <!-- Last Name -->
+                    <mat-form-field class="form-field">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" placeholder="Enter Last Name">
+                        @if(employeeForm.get('lastName')?.hasError('required'))
+                        {<mat-error>Last Name is required</mat-error>}
+                        @if(employeeForm.get('lastName')?.hasError('pattern'))
+                        {<mat-error>Last Name must contain letters only</mat-error>}
+                        @if(employeeForm.get('lastName')?.hasError('minLength'))
+                        {<mat-error>Last Name must be at least 5 characters long</mat-error>}
+                        @if(employeeForm.get('lastName')?.hasError('maxLength'))
+                        {<mat-error>Last Name must be at most 10 characters long</mat-error>}
+                    </mat-form-field>
+
+                    <!-- ID number -->
+                    <mat-form-field matTooltip="ID number must contain only digits" class="form-field">
+                        <mat-label>ID number</mat-label>
+                        <input matInput formControlName="tz" placeholder="Enter ID number">
+                        @if(employeeForm.get('tz')?.hasError('required'))
+                        {<mat-error>ID Number is required</mat-error>}
+                        @if(employeeForm.get('tz')?.hasError('invalidIdNumber')&&employeeForm.get('tz')?.hasError('pattern'))
+                        {<mat-error>ID Number is invalid</mat-error>}
+                    </mat-form-field>
+                </div>
+
+                <!-- Date Of Birth -->
+                <div class="form-row">
+                    <mat-form-field class="form-field" matTooltip="Employee must be over 18">
+                        <mat-label>Date Of Birth</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"
+                            placeholder="Enter Date Of Birthd">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        @if(employeeForm.get('dateOfBirth')?.hasError('required'))
+                        {<mat-error>Date Of Birth is required</mat-error>}
+                    </mat-form-field>
+
+                    <!-- Start of Work Date -->
+                    <mat-form-field class="form-field">
+                        <mat-label>Start of Work Date</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="startDate"
+                            placeholder="Enter Start of Work Date">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        @if(employeeForm.get('startDate')?.hasError('required'))
+                        {<mat-error>Start of Work Date is required</mat-error>}
+                    </mat-form-field>
+
+                    <!-- Gender -->
+                    <mat-form-field appearance="fill" class="form-field">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender" placeholder="Select Gender">
+                            <mat-option value="male">Male 👨</mat-option>
+                            <mat-option value="female">Female 👩</mat-option>
+                        </mat-select>
+                        @if(employeeForm.get('gender')?.hasError('required')){
+                        <mat-error>Gender is required</mat-error>}
+                    </mat-form-field>
+                </div>
+
+                <!-- Roles -->
+                <ng-container formArrayName="roles">
+                    <div *ngIf="roles.length > 0" class="role-container">
+                        <ng-container *ngFor="let roleControl of roles.controls; let i=index" [formGroupName]="i">
+                            <app-role-form [formControlName]="'role'" (delete)="onDelete(i)" (roleName)="isRoleDisabled($event)"
+                                [startingDateWorking]="employeeForm.get('startDate')?.value"></app-role-form>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <!-- Add Role -->
+                <button mat-icon-button color="primary" (click)="addRole()" matTooltip="Add role" type="button">
+                    <mat-icon>add</mat-icon>
+                </button>
+
+            </form>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="submit()">submit</button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,51 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<h1 class="text-center mt-5 text">Employees</h1>
+<div class="container mt-3">
+  <div class="row" id="title">
+    <div class="col-md-6">
+      <input id="select" type="search" class="form-control" [(ngModel)]="searchText" (input)="filterEmployees()"
+        placeholder="🔎 Search employees">
+    </div>
+
+    <div class="col-md-6 d-flex justify-content-end">
+      <button id="export" (click)="exportToExcel()" class="btn btn-primary mr-2" title="Export to Excel">
+        <span class="material-icons">get_app</span> Export to Excel
+      </button>
+      <button id="add-employee-btn" matTooltip="הוספת עובד לעסק" (click)="addNewEmployee()" class="btn btn-success"
+        title="Add Employee">
+        <span class="material-icons">add</span> Add Employee
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>ID number</th>
+        <th>Start work date</th>
+        <th>Delete</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of filteredEmployees">
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.tz }}</td>
+        <td>{{ employee.startDate | date }}</td>
+        <td (click)="removeEmployee(employee.id)" class="text-danger"><span class="material-icons">delete_outline</span>
+        </td>
+        <td (click)="editEmployee(employee)" class="text-primary"><span class="material-icons">edit</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="container mt-3 d-flex justify-content-center align-items-center" style="height: 10vh;">
+    <p-progressSpinner ariaLabel="loading" *ngIf="hasItems == false"></p-progressSpinner>
+  </div>
+</div>

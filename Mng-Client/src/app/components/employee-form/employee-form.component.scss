@@ -1,0 +1,32 @@
+.form-container {
+  margin: 20px;
+  height: calc(90vh - 40px);
+  /* Adjusted to fill the viewport height */
+  overflow-y: auto;
+  /* Added to enable vertical scrolling if the content exceeds viewport height */
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-field {
+  width: calc(33.333% - 10px);
+}
+
+.role-container {
+  margin-top: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 4.5%;
+  right: 2%;
+}
+
+button.mat-icon-button:active {
+  outline: none;
+  border: none;
+}

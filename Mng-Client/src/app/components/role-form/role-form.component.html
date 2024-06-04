@@ -1,0 +1,54 @@
+<form [formGroup]="roleForm">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+            </mat-panel-title>
+            <mat-panel-description>
+                Enter your role
+                <mat-icon>work</mat-icon>
+            </mat-panel-description>
+
+            <!-- delete role -->
+            <button mat-icon-button color="warn" (click)="removeRole()" matTooltip="Remove role">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-expansion-panel-header>
+
+        <div class="form-row">
+
+            <!-- role name -->
+            <mat-form-field appearance="fill" class="role-field">
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="roleId" placeholder="Select Role" class="role-select"
+                    (selectionChange)="ChoosingRole($event.value)">
+                    <mat-option *ngFor="let role of roles" [value]="role.id">
+                        {{ role.roleName }}
+                    </mat-option>
+                </mat-select>
+                @if(roleForm.get('roleId')?.hasError('required'))
+                {<mat-error>Role Name is required</mat-error>}
+            </mat-form-field>
+
+            <!-- Date entry of work -->
+            <mat-form-field appearance="fill" class="role-field"
+                matTooltip="The role start date must be after the work start date">
+                <mat-label>Date entry of work</mat-label>
+                <input matInput formControlName="startDate" [matDatepicker]="entryDatePicker"
+                    placeholder="Enter Date entry of work" class="role-input">
+                <mat-datepicker-toggle matSuffix [for]="entryDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #entryDatePicker></mat-datepicker>
+                @if(roleForm.get('startDate')?.hasError('required'))
+                {<mat-error>Starting Role Date is required</mat-error>}
+                @if(roleForm.get('startDate')?.hasError('entryDateValidator'))
+                {<mat-error>Date must be greater than or equal to Employment Start Date</mat-error>}
+            </mat-form-field>
+
+            <!-- Administrative -->
+            <span>Administrative</span>
+            <div class="role-toggle">
+                <mat-slide-toggle formControlName="isManagement" color="primary"></mat-slide-toggle>
+            </div>
+
+        </div>
+    </mat-expansion-panel>
+</form>
